@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float playerSpeed = 5f;
-    public float jumpForce = 10f;
+    public float playerSpeed;
+    public float jumpForce;
 
-    private float deplacementsHorizontaux;
+    public float deplacementsHorizontaux;
     private bool isGround = true;
+    private bool canMove = true;
     private Rigidbody2D body;
     private bool faceRight = true;
+
+
+    private void Awake()
+    {
+        
+    }
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
     }
+
 
     private void FixedUpdate()
     {
@@ -23,6 +31,7 @@ public class PlayerMove : MonoBehaviour
         Jump();
     }
 
+    //CHAQUE FRAME
     void Update()
     {
     }
@@ -32,6 +41,7 @@ public class PlayerMove : MonoBehaviour
     {       
         //recupere l'entrée horizontale (float allant de -1 à 1)
         deplacementsHorizontaux = Input.GetAxis("Horizontal");
+
         //definir la velocite du personnage
         float velocite = deplacementsHorizontaux * playerSpeed;
 
@@ -59,15 +69,32 @@ public class PlayerMove : MonoBehaviour
         // Dessiner le Raycast dans la scène
         Debug.DrawRay(raycastStart, playerDirection * 0.1f, Color.red);
 
-        //Si le raycast n'entre pas en collision avec un obstacle, je peux avancer
+        //Si le raycast n'entre pas en collision avec un obstacle, je peux avancer       
         if (hit.collider == null || !hit.collider.gameObject.CompareTag("obstacle"))
         {
-            //Enfin j'applique la force de deplacement
-            body.velocity = new Vector2(velocite, body.velocity.y);
-        } else
+            if (canMove && deplacementsHorizontaux != 0) 
+            {
+                //Enfin j'applique la force de deplacement
+                body.velocity = new Vector2(velocite, body.velocity.y);
+                //body.AddForce(new Vector2(velocite, body.velocity.y), ForceMode2D.Force);
+            }
+        } 
+        else
         {
-            body.velocity = Vector2.zero;
-        }  
+            body.velocity = new Vector2(0f, body.velocity.y);
+            if(!isGround)
+            {
+                canMove = false;
+                if(faceRight)
+                {
+                    StartCoroutine(JbonkLeft(10f));
+                }
+                else
+                {
+                    StartCoroutine(JbonkRight(10f));
+                }
+            }
+        }    
  
     }
 
@@ -79,7 +106,6 @@ public class PlayerMove : MonoBehaviour
             body.AddForce(Vector2.up * jumpForce);
             isGround = false;                    
         }
-
     }
 
     void Flip()
@@ -98,27 +124,24 @@ public class PlayerMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "obstacle" && !isGround)
-        {
-            body.velocity = new Vector2(0f, body.velocity.y);
-        }
+        
     }
 
     //SYMPA PERMET DE FAIRE DES JBONK ET D'ATTENDRE QUE LA VELOCITEE DU PERSO RETOMBE A 0 AVANT DE FAIRE AUTRE CHOSE
     //utiliser avec un StartCoroutin(maFonction);
 
-    //IEnumerator JbonkLeft(float jbonkForce)
-    //{
-    //    Debug.Log("JBONK");
-    //    body.AddForce(Vector2.left * jbonkForce, ForceMode2D.Impulse);
-    //    yield return new WaitUntil(() => body.velocity == Vector2.zero);
-    //    canMove = true;
-    //}
+    IEnumerator JbonkLeft(float jbonkForce)
+    {
+        Debug.Log("JBONK");
+        body.AddForce(Vector2.left * jbonkForce, ForceMode2D.Impulse);
+        yield return new WaitUntil(() => isGround );
+        canMove = true;
+    }
 
-    //IEnumerator JbonkRight(float jbonkForce)
-    //{
-    //    body.AddForce(Vector2.right * jbonkForce, ForceMode2D.Impulse);
-    //    yield return new WaitUntil(() => body.velocity == Vector2.zero);
-    //    canMove = true;
-    //}
+    IEnumerator JbonkRight(float jbonkForce)
+    {
+        body.AddForce(Vector2.right * jbonkForce, ForceMode2D.Impulse);
+        yield return new WaitUntil(() => isGround);
+        canMove = true;
+    }
 }
