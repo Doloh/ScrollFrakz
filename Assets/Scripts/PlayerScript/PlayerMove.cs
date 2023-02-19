@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
    
     void Deplacements()
     {       
-        //recupere l'entrée horizontale (float allant de -1 à 1)
+        //recupere l'entrï¿½e horizontale (float allant de -1 ï¿½ 1)
         deplacementsHorizontaux = Input.GetAxis("Horizontal");
 
         //definir la velocite du personnage
@@ -61,12 +61,12 @@ public class PlayerMove : MonoBehaviour
 
         // Obtenir les dimensions du sprite
         Vector2 spriteDimensions = GetComponent<Collider2D>().bounds.size;
-        // Déterminer la position de départ du raycast
+        // Dï¿½terminer la position de dï¿½part du raycast
         Vector2 raycastStart = new Vector2(transform.position.x + (faceRight ? spriteDimensions.x / 2f + 0.01f : -spriteDimensions.x / 2f - 0.01f), transform.position.y);
        
         //Je lance un raycast dans cette direction
         RaycastHit2D hit = Physics2D.Raycast(raycastStart, playerDirection, 0.1f);
-        // Dessiner le Raycast dans la scène
+        // Dessiner le Raycast dans la scï¿½ne
         Debug.DrawRay(raycastStart, playerDirection * 0.1f, Color.red);
 
         //Si le raycast n'entre pas en collision avec un obstacle, je peux avancer       
@@ -102,7 +102,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) && isGround)
         {
-            // Applique une force de saut sur le corps rigide en fonction de la durée du saut
+            // Applique une force de saut sur le corps rigide en fonction de la durï¿½e du saut
             body.AddForce(Vector2.up * jumpForce);
             isGround = false;                    
         }
