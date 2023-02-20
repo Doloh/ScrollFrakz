@@ -581,13 +581,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1963211613, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
+      propertyPath: m_Size.x
+      value: 0.22978157
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963211613, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4801948
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963211613, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.00078085065
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963211613, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.005333066
+      objectReference: {fileID: 0}
     - target: {fileID: 1963211614, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
       propertyPath: jumpForce
-      value: 10000
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1963211614, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
       propertyPath: playerSpeed
-      value: 500
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2061735357399607880, guid: 4dff1d2be7cb92a4cbf6c6ccd804f3a9, type: 3}
       propertyPath: m_Name
