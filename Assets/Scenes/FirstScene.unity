@@ -520,10 +520,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c44863759268447b3da9f85521fe13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  accelerationRate: 7
-  deccelerationRate: 7
-  velocityPower: 0.9
+  moveSpeed: 9
+  accelerationRate: 9
+  deccelerationRate: 9
+  velocityPower: 1.2
+  frictionAmount: 10
+  grounded: 1
   body: {fileID: 0}
 --- !u!1 &1761198459
 GameObject:

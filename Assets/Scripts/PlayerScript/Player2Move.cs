@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class Player2Move : MonoBehaviour
 {
 
@@ -13,7 +14,13 @@ public class Player2Move : MonoBehaviour
 
     public Rigidbody2D body;
     private Vector2 velocity = Vector2.zero;
-    private float moveInput = 0f;
+
+    private PlayerInput playerInput;
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
 
     void Start()
     {
@@ -24,33 +31,15 @@ public class Player2Move : MonoBehaviour
     {
         // Get input
         // Run
-        GetInput();
         Run();
         Friction();
 
     }
 
-    // A déplacer dans un input handler, une classe dans un fichier à part pour que ça soit réutilisable par tous les scripts
-    void GetInput()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            moveInput = -moveSpeed;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            moveInput = moveSpeed;
-        }
-        else
-        {
-            moveInput = 0;
-        }
-    }
-
     void Run()
     {
         // Get l'input horizontal [-1,1]
-        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputX = playerInput.inputX;
 
         // Calcul la vélocité cible qu'on veut atteindre via l'input
         float targetVelocity = inputX * moveSpeed;
@@ -86,7 +75,7 @@ public class Player2Move : MonoBehaviour
     {
         // Artificial Friction
         // Si on est au sol et qu'on essaie de s'arrêter (pas d'input), on va appliquer une anti-force de friction ou notre vélocité selon lequel des deux est le plus petit.
-        if (grounded && Mathf.Abs(moveInput) < 0.01f)
+        if (grounded && Mathf.Abs(playerInput.inputX) < 0.01f)
         {
             float amount = Mathf.Min(Mathf.Abs(body.velocity.x), Mathf.Abs(frictionAmount));
             amount *= Mathf.Sign(body.velocity.x);
