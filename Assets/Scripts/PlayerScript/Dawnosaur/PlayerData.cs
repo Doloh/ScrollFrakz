@@ -3,6 +3,6 @@ using UnityEngine;
 
 public class PlayerData : ScriptableObject
 {
-	[Header("Test")]
-	public float test;
+	[Header("Run")]
+	public float runMaxSpeed; //Target speed we want the player to reach.
 }
