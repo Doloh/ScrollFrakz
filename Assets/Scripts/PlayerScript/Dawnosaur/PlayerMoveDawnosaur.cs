@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMoveDawnosaur : MonoBehaviour
 {
+    // Déclare le playerData dans lequel on sélectionnera le scriptable object (hk, celeste, SMB...)
+    public PlayerData Data;
 
     void Awake()
     {
