@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMoveDawnosaur : MonoBehaviour
 {
-    // Déclare le playerData dans lequel on sélectionnera le scriptable object (hk, celeste, SMB...)
+    // Dï¿½clare le playerData dans lequel on sï¿½lectionnera le scriptable object (hk, celeste, SMB...)
     public PlayerData Data;
 
     #region COMPONENTS
@@ -23,7 +23,6 @@ public class PlayerMoveDawnosaur : MonoBehaviour
 
     private void Start()
     {
-        
     }
 
     private void Update()
@@ -45,11 +44,23 @@ public class PlayerMoveDawnosaur : MonoBehaviour
         //Calculate the direction we want to move in and our desired velocity
         float targetSpeed = _moveInput.x * Data.runMaxSpeed;
 
+        #region Calculate AccelRate
+        //Gets an acceleration value based on if we are accelerating (includes turning) 
+        //or trying to decelerate (stop).
+        float accelRate;
+        accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? Data.runAccelAmount : Data.runDeccelAmount;
+        #endregion
+
         //Calculate difference between current velocity and desired velocity
+        // ï¿½a induit 2 choses :
+        // 1 - au plus on s'approche de notre vitesse max au moins on accï¿½lï¿½re (ï¿½a smooth tout, boost de vitesse quand on tourne etc...)
+        // 2 - on dï¿½passera jamais notre vitesse max (on l'atteindra jamais vraiment non plus mais l'ï¿½cart sera invisible)
+        // Autrement dit speedDiff tend vers 1/l'infini
         float speedDiff = targetSpeed - RB.velocity.x;
+        float movement = speedDiff * accelRate;
 
         //Convert this to a vector and apply to rigidbody
-        RB.AddForce(speedDiff * Vector2.right, ForceMode2D.Force);
+        RB.AddForce(movement * Vector2.right, ForceMode2D.Force);
 
         /*
 		 * For those interested here is what AddForce() will do
