@@ -13,6 +13,9 @@ Ensuite il suffit d'attacher le scriptable object dans cette variable PlayerData
 ## Gestion de la direction
 On init une value IsLookingRight à true, à chaque fois qu'on a un input en X on va check si on doit changer de direction.
 
+## Jump
+1 - Créer un ground check et un ground layer
+2 - On input, on applique une force de jump si on est pas déjà en train de sauter et qu'on est au sol
 
 ## Physique
 ### Le principe d'une force
@@ -125,5 +128,5 @@ A noter qu'on pourrait très bien lvl up de ouf mathématiquement un moment et c
 - Air time à l'apex + treshold de l'air time
 - Bonus d'acceleration à l'air time
 - Fast fall + fast fall capp
-- ensuite on rescannera pour le double jump, wall jump dash slide etc
+- ensuite on rescannera pour le double jump, wall jump dash slide etc (pas oublier les lignes 422-424 )
 - Animation du perso
