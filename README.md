@@ -10,6 +10,9 @@ public PlayerData Data;
 ```
 Ensuite il suffit d'attacher le scriptable object dans cette variable PlayerData de notre Player dans unity.
 
+## Gestion de la direction
+On init une value IsLookingRight à true, à chaque fois qu'on a un input en X on va check si on doit changer de direction.
+
 
 ## Physique
 ### Le principe d'une force
@@ -111,3 +114,16 @@ On a une fonction de run qui
 
 ça me plait pas trop que ça soit pas fiable mathématiquement, mais bon c'est des ptits détail qui se ressentiront surement pas humainement, et si un moment on a besoin d'être ultra précis, on pourra toujours contourner ça ponctuellement en utilisant de la vélocité ou simplifiant la formule.
 A noter qu'on pourrait très bien lvl up de ouf mathématiquement un moment et comprendre comment controler une fonction réccursive, c'est pas exclu.
+
+## Recup list dawnosaur
+- Jump simple
+- Jump calculé (avec jump height + time to apex + jump force + gravity strength)
+- Gravity au fall + gravity fall cap (pour éviter une accélération infinie dans de gros niveau verticaux)
+- Jump cut
+- Accel rate du run si en l'air
+- conserve momentum (si on jump, on applique pas de force qui ralentirait le joueur s'il continue dans la direction dans laquelle il a sauté)
+- Air time à l'apex + treshold de l'air time
+- Bonus d'acceleration à l'air time
+- Fast fall + fast fall capp
+- ensuite on rescannera pour le double jump, wall jump dash slide etc
+- Animation du perso

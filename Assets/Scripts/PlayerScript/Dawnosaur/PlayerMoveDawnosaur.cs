@@ -12,9 +12,17 @@ public class PlayerMoveDawnosaur : MonoBehaviour
     //Script to handle all player animations, all references can be safely removed if you're importing into your own project.
     #endregion
 
+    #region STATE PARAMETERS
+    //Variables control the various actions the player can perform at any time.
+    //These are fields which can are public allowing for other scripts to read them
+    //but can only be privately written to.
+    public bool IsFacingRight { get; private set; }
+    #endregion
+
     #region INPUT PARAMETERS
     private Vector2 _moveInput;
     #endregion
+
 
     private void Awake()
     {
@@ -23,12 +31,17 @@ public class PlayerMoveDawnosaur : MonoBehaviour
 
     private void Start()
     {
+        IsFacingRight = true;
     }
 
     private void Update()
     {
         #region INPUT HANDLER
         _moveInput.x = Input.GetAxisRaw("Horizontal"); // -1,1
+
+        // Si on a un input, on check dans quelle direction tourner le player
+        if (_moveInput.x != 0)
+            CheckDirectionToFace(_moveInput.x > 0);
         #endregion
     }
 
@@ -68,5 +81,25 @@ public class PlayerMoveDawnosaur : MonoBehaviour
 		 * Time.fixedDeltaTime is by default in Unity 0.02 seconds equal to 50 FixedUpdate() calls per second
 		*/
     }
+    private void Turn()
+    {
+        //stores scale and flips the player along the x axis, 
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+
+        IsFacingRight = !IsFacingRight;
+    }
     #endregion
+
+    #region CHECK METHODS
+    // Check dans quelle direction on va
+    public void CheckDirectionToFace(bool isMovingRight)
+    {
+        // Si on est pas tourné dans le sens de la direction, on turn
+        if (isMovingRight != IsFacingRight)
+            Turn();
+    }
+    #endregion
+
 }
